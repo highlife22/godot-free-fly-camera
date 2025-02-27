@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://gg8bk3sclysp"]
+
+[ext_resource type="Script" uid="uid://4a2jpgxmm0mh" path="res://addons/Free fly camera/Src/free_fly_startup.gd" id="1_lgx75"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_a202f"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_noarx"]
+sky_material = SubResource("ProceduralSkyMaterial_a202f")
+
+[sub_resource type="Environment" id="Environment_a0tk4"]
+background_mode = 2
+sky = SubResource("Sky_noarx")
+tonemap_mode = 2
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_a202f"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_a0tk4")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Free fly camera" type="CharacterBody3D" parent="." node_paths=PackedStringArray("camera", "collision")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.18802, 1.51199)
+script = ExtResource("1_lgx75")
+KEY_FORWARD = "ui_forward"
+KEY_BACKWARD = "ui_backward"
+KEY_LEFT = "ui_left"
+KEY_RIGHT = "ui_right"
+KEY_UP = "ui_accept"
+KEY_DOWN = "ui_down"
+KEY_SPRINT = "ui_sprint"
+camera = NodePath("Camera")
+collision = NodePath("Collision")
+KEY_ESCAPE = "ui_cancel"
+metadata/_custom_type_script = "uid://4a2jpgxmm0mh"
+
+[node name="Collision" type="CollisionShape3D" parent="Free fly camera"]
+shape = SubResource("SphereShape3D_a202f")
+
+[node name="Camera" type="Camera3D" parent="Free fly camera"]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.35492)
